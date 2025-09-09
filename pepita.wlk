@@ -1,4 +1,5 @@
 import comidas.*
+import wollok.game.*
 
 object pepita {
 	var property position = game.at(0,1) //
