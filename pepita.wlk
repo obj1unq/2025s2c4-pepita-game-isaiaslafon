@@ -7,6 +7,7 @@ object pepita {
 	var energia = 100
     const predador = silvestre
     const hogar = nido
+	const joules = 9
 
 	//method image() = "pepita-base.png"
 	method image(){
@@ -14,10 +15,21 @@ object pepita {
     }
 
 	method estado(){
-		return if (self.esAtrapada()){ "gris" }
+		//(self.esAtrapada() or not self.conEnergia()){ "gris" }
+		return if (self.esAtrapada() || !self.puedeMover()){ "gris" }
 		    	else if (self.enHogar()){ "grande"  }
 				else { "base" }
 	}
+
+	method loQueHayAca() = game.uniqueCollider(self)
+
+	method comerAca(){
+		const comida = self.loQueHayAca()
+		self.comer(comida)
+		comida.andate()
+	}
+	
+	method puedeMover() = energia >= self.energiaNecesaria(1) && not self.esAtrapada()
 
 	method esAtrapada() = self.estaSobre(predador)
 
@@ -33,8 +45,27 @@ object pepita {
 		energia = energia + comida.energiaQueOtorga()
 	}
 
+	method energiaNecesaria(kms) = joules * kms
+
 	method volar(kms) {
-		energia = energia - 10 - kms 
+		//energia = energia - 9 * kms
+		//energia -= 9 * kms
+		energia -= self.energiaNecesaria(kms) 
+		//energia = energia - self.energiaNecesaria(kms)
+	}
+
+    method mover(direccion){
+		if(self.puedeMover()){
+			self.volar(1)
+			position = direccion.siguiente(position)
+		} else {
+			self.perder()
+		}
+	}
+
+	method perder(){
+		game.say(self, "Perdí!")
+		game.schedule( 2000, { game.stop() })
 	}
 
 	method energia() {
