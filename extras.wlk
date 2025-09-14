@@ -6,6 +6,7 @@ object nido{
 
     method image() = "nido.png"
 
+
 }
 
 object silvestre{
