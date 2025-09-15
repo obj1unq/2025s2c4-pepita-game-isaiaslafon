@@ -18,5 +18,7 @@ object nivel1 {
 		keyboard.left().onPressDo { pepita.mover(izquierda) }
 		keyboard.right().onPressDo { pepita.mover(derecha) }
 		keyboard.c().onPressDo { pepita.comerAca() }		
+
+    game.onCollideDo(pepita, { algo => pepita.teAtraparon() })
 	}
 }

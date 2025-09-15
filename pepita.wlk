@@ -12,24 +12,26 @@ object pepita {
 
 	var property position = posicionInicial
 	var energia = energiaInicial
+	var property atrapada = false
 
 	method inicializar() {
 		position = game.at(0,1)
 		energia = energiaInicial
-
+		atrapada = false
 	}
 
-	//method image() = "pepita-base.png"
 	method image() {
 		return "pepita-" + self.estado() + ".png"
 	}
 
 	method estado() {
-		//(self.esAtrapada() or not self.conEnergia()){ "gris" }
-		return if (self.esAtrapada() || !self.puedeMover()) { "gris" }
+		return if (!self.puedeMover()) { "gris" }
 		  else if (self.enHogar()) { "grande"  }
 			else { "base" }
 	}
+
+	method puedeMover() = 
+		energia >= self.energiaNecesaria(1) && not self.atrapada()
 
 	method loQueHayAca() = game.uniqueCollider(self)
 
@@ -39,9 +41,11 @@ object pepita {
 		comida.andate()
 	}
 	
-	method puedeMover() = energia >= self.energiaNecesaria(1) && not self.esAtrapada()
-
-	method esAtrapada() = self.estaSobre(predador)
+	method teAtraparon() {
+		self.atrapada(true)
+		game.say(self, "Me atraparon!")
+		self.perder()
+	}
 
 	method enHogar() = self.estaSobre(hogar)
 
