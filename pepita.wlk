@@ -1,24 +1,34 @@
 import extras.*
 import comidas.*
+import niveles.*
 import wollok.game.*
 
 object pepita {
-	var property position = game.at(0,1) //
-	var energia = 100
-    const predador = silvestre
-    const hogar = nido
+	const posicionInicial = game.at(0,1)
+	const energiaInicial = 100
+	const predador = silvestre
+	const hogar = nido
 	const joules = 9
 
-	//method image() = "pepita-base.png"
-	method image(){
-        return "pepita-" + self.estado() + ".png"
-    }
+	var property position = posicionInicial
+	var energia = energiaInicial
 
-	method estado(){
+	method inicializar() {
+		position = game.at(0,1)
+		energia = energiaInicial
+
+	}
+
+	//method image() = "pepita-base.png"
+	method image() {
+		return "pepita-" + self.estado() + ".png"
+	}
+
+	method estado() {
 		//(self.esAtrapada() or not self.conEnergia()){ "gris" }
-		return if (self.esAtrapada() || !self.puedeMover()){ "gris" }
-		    	else if (self.enHogar()){ "grande"  }
-				else { "base" }
+		return if (self.esAtrapada() || !self.puedeMover()) { "gris" }
+		  else if (self.enHogar()) { "grande"  }
+			else { "base" }
 	}
 
 	method loQueHayAca() = game.uniqueCollider(self)
@@ -54,7 +64,7 @@ object pepita {
 		//energia = energia - self.energiaNecesaria(kms)
 	}
 
-    method mover(direccion){
+	method mover(direccion){
 		if(self.puedeMover()){
 			self.volar(1)
 			position = direccion.siguiente(position)
@@ -64,8 +74,12 @@ object pepita {
 	}
 
 	method perder(){
-		game.say(self, "Perdí!")
-		game.schedule( 2000, { game.stop() })
+		game.say(self, "Perdiste, presiona la R para reiniciar")
+		keyboard.r().onPressDo {
+			game.clear()
+			nivel1.inicializar()
+			self.inicializar()
+		}
 	}
 
 	method energia() {

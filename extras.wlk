@@ -3,10 +3,7 @@ import pepita.*
 
 object nido{
     const property position = game.at(8, 8)
-
     method image() = "nido.png"
-
-
 }
 
 object silvestre{
