@@ -33,10 +33,24 @@ object pepita {
 
 	method loQueHayAca() = game.uniqueCollider(self)
 
+	method trataDeComer() {
+		try {
+			const comida = self.loQueHayAca()
+			self.comer(comida)
+			comida.andate()
+		}
+		catch e1: Exception {
+			self.error("No hay nada para comer acá")
+		}
+	}
+
 	method comerAca(){
-		const comida = self.loQueHayAca()
-		self.comer(comida)
-		comida.andate()
+		try {
+			self.trataDeComer()
+		} 
+		catch e2: Exception {
+			console.println(e2.message())
+		}		
 	}
 	
 	method puedeMover() = energia >= self.energiaNecesaria(1) && not self.esAtrapada()
