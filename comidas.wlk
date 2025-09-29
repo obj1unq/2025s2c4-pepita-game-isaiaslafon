@@ -1,9 +1,9 @@
 import wollok.game.*
 
-object manzana {
-	const base= 5
+class Manzana {
+	const base = 5
 	var madurez = 1
-	var property position = game.at(4,4)
+	var property position
 
 	method image() = "manzana.png"
 
@@ -16,7 +16,7 @@ object manzana {
 		//madurez += 1
 	}
 
-	method andate(){
+	method andate() {
 		game.removeVisual(self)
 	}
 
