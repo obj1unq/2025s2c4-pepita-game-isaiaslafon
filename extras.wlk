@@ -25,7 +25,7 @@ object silvestre {
     }
 }
 
-object muro {
+class Muro {
     method image() = "muro.png"
     method position() = game.at(3, 3)
 
@@ -33,3 +33,5 @@ object muro {
         alguien.retroceder()
     }
 }
+
+const muro = new Muro() 
