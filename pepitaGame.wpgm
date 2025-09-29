@@ -4,28 +4,14 @@ import extras.*
 import comidas.*
 import niveles.*
 
-//Framework INVERSIÓN DE CONTROL
-//Library = Biblioteca
-//Modelo.
-//BLOQUES
-
 program pepitaGame {
 	game.title("Pepita") 	//Valor por defecto "Wollok Game"
 	game.height(10) 		//valor por defecto 5
 	game.width(10) 			//valor por defecto 5
 	game.cellSize(50) 		//valor por defecto 50
 	
-	//busca las imagenes en la carpeta assets
-	
-	//Valor por defecto 
 	game.boardGround("fondo2.jpg")
-	//game.ground("suelo.png")
-
-	nivel1.inicializar()	
-
-	//EL orden de agregar visuales IMPORTA! Siempre, el último, está encima.
-	//game.addVisual(pepita)
-
+	controlador.inicializar()	
 	game.start()
 }
 

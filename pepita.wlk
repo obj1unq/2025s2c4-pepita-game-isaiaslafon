@@ -13,6 +13,7 @@ object pepita {
 	var property position = posicionInicial
 	var energia = energiaInicial
 	var property atrapada = false
+	var ultimaDireccion = null
 
 	method inicializar() {
 		position = game.at(0,1)
@@ -33,10 +34,7 @@ object pepita {
 	method puedeMover() = 
 		energia >= self.energiaNecesaria(1) && not self.atrapada()
 
-	method loQueHayAca() = game.uniqueCollider(self)
-
-	method comerAca(){
-		const comida = self.loQueHayAca()
+	method comerAca(comida){
 		self.comer(comida)
 		comida.andate()
 	}
@@ -44,7 +42,7 @@ object pepita {
 	method teAtraparon() {
 		self.atrapada(true)
 		game.say(self, "Me atraparon!")
-		self.perder()
+		controlador.perder()
 	}
 
 	method enHogar() = self.estaSobre(hogar)
@@ -62,27 +60,16 @@ object pepita {
 	method energiaNecesaria(kms) = joules * kms
 
 	method volar(kms) {
-		//energia = energia - 9 * kms
-		//energia -= 9 * kms
 		energia -= self.energiaNecesaria(kms) 
-		//energia = energia - self.energiaNecesaria(kms)
 	}
 
 	method mover(direccion){
 		if(self.puedeMover()){
 			self.volar(1)
 			position = direccion.siguiente(position)
+			ultimaDireccion = direccion
 		} else {
-			self.perder()
-		}
-	}
-
-	method perder(){
-		game.say(self, "Perdiste, presiona la R para reiniciar")
-		keyboard.r().onPressDo {
-			game.clear()
-			nivel1.inicializar()
-			self.inicializar()
+			controlador.perder()
 		}
 	}
 
@@ -90,10 +77,13 @@ object pepita {
 		return energia
 	}
 
-	//Esto no se usa.
-	method redibujarse(){
-	  game.removeVisual(self)
-	  game.addVisual(self)
+	method encontraste(algo) {
+		algo.queHagoConVos(self)
+	}
+
+	method ganaste() {
+		game.say(self, "Ganaste!")
+		controlador.subirDeNivel()
 	}
 }
 

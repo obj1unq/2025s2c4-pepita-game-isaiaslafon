@@ -20,6 +20,9 @@ object manzana {
 		game.removeVisual(self)
 	}
 
+	method queHagoConVos(alguien) {
+		alguien.comerAca(self)
+	}
 }
 
 object alpiste {
@@ -28,12 +31,15 @@ object alpiste {
 	method image() = "alpiste.png"
 
 	method energiaQueOtorga() {
-		return 20
+		return 100
 	} 
 
 	method andate(){
 		game.removeVisual(self)
 	}
 
+	method queHagoConVos(alguien) {
+		alguien.comerAca(self)
+	}
 }
 
