@@ -63,14 +63,22 @@ object pepita {
 		energia -= self.energiaNecesaria(kms) 
 	}
 
-	method mover(direccion){
+	method mover(direccion) {
 		if(self.puedeMover()){
 			self.volar(1)
-			position = direccion.siguiente(position)
-			ultimaDireccion = direccion
+			self.doMover(direccion)
 		} else {
 			controlador.perder()
 		}
+	}
+
+	method doMover(direccion) {
+		position = direccion.siguiente(position)
+		ultimaDireccion = direccion
+	}
+
+	method retroceder() {
+		position = ultimaDireccion.anterior(position)		
 	}
 
 	method energia() {

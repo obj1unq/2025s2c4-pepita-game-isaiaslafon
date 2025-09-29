@@ -30,7 +30,7 @@ object controlador {
 
 object nivel1 {
 	method inicializar() {
-		const personajes = [ nido, silvestre, alpiste, manzana, pepita ]
+		const personajes = [ nido, silvestre, alpiste, manzana, pepita, muro ]
 		personajes.forEach { el => game.addVisual(el) }
 
 		keyboard.up().onPressDo { pepita.mover(arriba) }
