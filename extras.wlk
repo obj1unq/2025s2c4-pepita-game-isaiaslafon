@@ -26,8 +26,9 @@ object silvestre {
 }
 
 class Muro {
+    var property position = game.at(3, 3)
+
     method image() = "muro.png"
-    method position() = game.at(3, 3)
 
     method queHagoConVos(alguien) {
         alguien.retroceder()
